@@ -1,5 +1,8 @@
 #ISIS1225 - Librerias de soporte
 
+Luis Alfredo Borbón Holguín - Código: 202110887 
+Manuel Felipe Carvajal Parra - Código: 202014203
+
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
 
 -Lib
