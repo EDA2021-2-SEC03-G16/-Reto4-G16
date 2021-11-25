@@ -22,7 +22,7 @@
 
 import config as cf
 import sys
-import controller
+import controller as c
 from DISClib.ADT import list as lt
 assert cf
 
