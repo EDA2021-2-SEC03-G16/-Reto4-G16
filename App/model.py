@@ -27,24 +27,42 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
-"""
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
-"""
 
-# Construccion de modelos
+def newCatalogo():
+    catalogo = {'red': None,
+            'aeropuertos': None}
 
-# Funciones para agregar informacion al catalogo
+    catalogo['red'] = gr.newGraph(datastructure='ADJ_LIST',directed=True,size=14000,comparefunction=None)
+    catalogo['aeropuertos'] = mp.newMap()
+    catalogo['ciudades'] = mp.newMap()
+    return catalogo
 
-# Funciones para creacion de datos
 
-# Funciones de consulta
+def addAirport(catalogo,airport):
+    id=airport['IATA']
+    mp.put(catalogo['aeropuertos'],id,airport)
+    if not gr.containsVertex(catalogo['red'], id):
+        gr.insertVertex(catalogo['red'], id)
+    return catalogo
 
-# Funciones utilizadas para comparar elementos dentro de una lista
 
-# Funciones de ordenamiento
+def addRoute(catalogo, route):
+    origen=route['Departure']
+    destino=route['Destination']
+    distancia=route['distance_km']
+    edge=gr.getEdge(catalogo['red'], origen, destino)
+    if edge is None:
+        gr.addEdge(catalogo['red'], origen, destino, distancia)
+    return catalogo
+
+
+def addCity(catalogo, city):
+    ciudad=city['city']
+    mp.put(catalogo['ciudades'],ciudad,city)
+    return catalogo

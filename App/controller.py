@@ -21,18 +21,38 @@
  """
 
 import config as cf
-import model
+import model as m
 import csv
 
 
-"""
-El controlador se encarga de mediar entre la vista y el modelo.
-"""
+def initCatalog():
+    catalogo = m.newCatalogo()
+    return catalogo
 
-# Inicialización del Catálogo de libros
 
-# Funciones para la carga de datos
+def loadData(catalogo):
+    loadAirports(catalogo)
+    loadRoutes(catalogo)
+    loadCities(catalogo)
+    return catalogo
 
-# Funciones de ordenamiento
 
-# Funciones de consulta sobre el catálogo
+def loadAirports(catalogo):
+    booksfile = cf.data_dir + 'Skylines/airports_full.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for airport in input_file:
+        m.addAirport(catalogo, airport)
+    
+
+def loadRoutes(catalogo):
+    booksfile = cf.data_dir + 'Skylines/routes_full.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for route in input_file:
+        m.addRoute(catalogo, route)
+
+
+def loadCities(catalogo):
+    booksfile = cf.data_dir + 'Skylines/worldcities.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for city in input_file:
+        m.addCity(catalogo, city)
