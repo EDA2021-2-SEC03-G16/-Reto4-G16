@@ -26,7 +26,7 @@ import csv
 
 
 def initCatalog():
-    catalogo = m.newCatalogo()
+    catalogo=m.newCatalogo()
     return catalogo
 
 
@@ -34,25 +34,40 @@ def loadData(catalogo):
     loadAirports(catalogo)
     loadRoutes(catalogo)
     loadCities(catalogo)
+    loadRoutes(catalogo)
     return catalogo
 
-
 def loadAirports(catalogo):
-    booksfile = cf.data_dir + 'Skylines/airports_full.csv'
+    booksfile = cf.data_dir + 'airports_full.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for airport in input_file:
         m.addAirport(catalogo, airport)
     
-
 def loadRoutes(catalogo):
-    booksfile = cf.data_dir + 'Skylines/routes_full.csv'
+    booksfile = cf.data_dir + 'routes_full.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for route in input_file:
         m.addRoute(catalogo, route)
 
-
 def loadCities(catalogo):
-    booksfile = cf.data_dir + 'Skylines/worldcities.csv'
+    booksfile = cf.data_dir + 'worldcities.csv'
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for city in input_file:
         m.addCity(catalogo, city)
+
+def loadRoutesCompleto(catalogo):
+    booksfile = cf.data_dir + 'routes_full.csv'
+    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    for route in input_file:
+        m.addRouteCompleto(catalogo, route)
+
+
+def Req1(catalogo):
+    return m.Req1(catalogo)
+
+
+def Req3(catalogo,origen,destino):
+    return m.req3(catalogo,origen,destino)
+
+def Req5(catalogo,aeropuerto):
+    return m.req5(catalogo,aeropuerto)
