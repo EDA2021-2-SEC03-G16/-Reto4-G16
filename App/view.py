@@ -65,6 +65,18 @@ def printAero(d):
     if d is not None:
         print('IATA: ' + d['IATA'] + ', Nombre: ' + d['Name']+ ', Ciudad: ' + d['City'] + ', Pais: ' + d['Country'])
 
+
+def printReq2(catalogo, a1, a2):
+    verificación, total = c.Req2(catalogo, a1, a2)
+    print("-" * 50)
+    print("Total de clusteres presentes: " + str(total))
+    print("-" * 50)
+    if verificación is True:
+        print("Los aeropuertos " + a1 + " y " + a2 + " SI estan Conectados.")
+    else:
+        print("Los aeropuertos " + a1 + " y " + a2 + " NO estan Conectados.")
+
+
 def printreq3(catalogo,origen,destino):
     respuesta=c.Req3(catalogo,origen,destino)
     aero_origen=lt.removeFirst(respuesta)
@@ -92,6 +104,45 @@ def printreq3(catalogo,origen,destino):
     print('Distancia total aereo: ' + str(int(total_a)))
     print('Distancia ciudad aeropuerto origen: ' + str(int(dt_origen)))
     print('Distancia ciudad aeropuerto destino: ' + str(int(dt_destino)))
+
+def Requerimiento4(catalogo):
+    origen = input("Ingrese la Ciudad de Origen: ")
+    millas = int(input("Ingrese su cantidad de Millas: "))
+    km = millas * 1.60
+    final, costo, cantidad, iata = c.Requerimiento4(catalogo, origen)
+    peso = 0 
+    print("Aeropuerto de Origen: " + mp.get(catalogo["aeropuertos"], iata)["value"]["Name"] 
+            + " de la ciudad de " + mp.get(catalogo["aeropuertos"], iata)["value"]["City"] + ", " 
+                + mp.get(catalogo["aeropuertos"], iata)["value"]["Country"])
+    print("-" * 90)
+    print("Numero de Aeropuertos Posibles: " + str(cantidad))
+    print("-" * 90)
+    print("Maxima distancia (Km) posible entre aeropuertos: " + str(round(costo, 2)))
+    print("-" * 90)
+    print("Millas diponibles del pasajero en Km: " + str(round(km, 2)))
+    print("-" * 90)
+    print("|" + " " * 25 + "Detalles del Recorrido más Largo" + " " * 25 + "|")
+    print("-" * 90)
+    while not st.isEmpty(final):
+        ver_A = st.pop(final)
+        ver_B = st.top(final)
+        edge = gr.getEdge(catalogo["blue"], ver_A, ver_B)
+        print(edge["vertexA"] + "--->" + edge["vertexB"] 
+                    + " costo: " + str(edge["weight"]))
+        peso += edge["weight"]
+        if st.size(final) == 1:
+            break
+    print("-" * 90)
+    print("Distancia del Recorrido más Largo: " + str(round(peso, 2)))
+    if km < peso:
+        total = peso - km
+        millas_finanles = round((total / 1.60), 2)
+        print("Al pasajero le faltan: " + str(millas_finanles) + " millas para completar el viaje")
+    else:
+        total = km - peso
+        millas_finanles = round((total / 1.60), 2)
+        print("Al pasajero le sobran: " + str(millas_finanles) + " millas")
+    return None 
 
 def printreq5(catalogo,aeropuerto):
     respuesta=c.Req5(catalogo,aeropuerto)
@@ -158,13 +209,13 @@ while True:
         print('Número de aeropuertos: ' + str(conectados))
 
     elif int(inputs[0]) == 3:
-        a1=input("Ingrese el Codigo IATA del primer aeropuerto: ")
-        a2= input("Ingrese el Codigo IATA del segundo aeropuerto: ")
+        a1= input("Ingrese el Codigo IATA del primer Aeropuerto: ")
+        a2 = input("Ingrese el Codigo IATA del segundo Aeropuerto: ")
         start_time = time.process_time()
-        Req2(catalogo, a1, a2)
+        printReq2(catalogo, a1, a2)
         stop_time = time.process_time()
         elapsed_time_mseg = (stop_time - start_time)*1000
-        print("Tiempo empleado: " + str(elapsed_time_mseg))
+        print("Tiempo de ejecución: " + str(elapsed_time_mseg))
     
     elif int(inputs[0]) == 4:
         o=input('Ciudad origen: ')
