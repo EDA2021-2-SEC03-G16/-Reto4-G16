@@ -71,8 +71,5 @@ def Req2(catalogo, I1, I2):
 def Req3(catalogo,origen,destino):
     return m.req3(catalogo,origen,destino)
 
-def Requerimiento4(catalogo, origen):
-    return m.lifeMiles(catalogo, origen)
-
 def Req5(catalogo,aeropuerto):
     return m.req5(catalogo,aeropuerto)
